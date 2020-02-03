@@ -1,0 +1,38 @@
+#Projections (select) and filter (filter & where)
+
+from pyspark.sql.types import *
+#defining schema to read the file
+fire_schema = StructType([
+StructField('IncidentNumber',IntegerType(),True),
+StructField('Address',StringType(),True),
+StructField('Incident_Date',StringType(),True),
+StructField('CallNumber',IntegerType(),True),
+StructField('Alarm_DTTM',StringType(),True),
+StructField('Arrival_DTTM',StringType(),True),
+StructField('Close_DTTM',StringType(),True),
+StructField('City',StringType(),True),
+StructField('zipcode',IntegerType(),True),
+StructField('Battalion',StringType(),True),
+StructField('Station_Area',IntegerType(),True),
+StructField('Box',IntegerType(),True),
+StructField('Primary_Situation',StringType(),True),
+StructField('Mutual_Aid',StringType(),True),
+StructField('Action_taken_primary',StringType(),True),
+StructField('Property_Use',StringType(),True),
+StructField('neighborhood',StringType(),True)
+])
+
+data = 'dbfs:/FileStore/tables/fire_incidents-bdf43.csv'
+
+fire_df = spark.read.csv(data,header=True,schema=fire_schema)
+
+#Analyzing data
+from pyspark.sql.functions import *
+few_fire_df = fire_df.select('IncidentNumber','Address','Incident_Date','CallNumber','City','Primary_Situation').filter(column('City')=='Brisbane')
+
+#Changing Column Names - using public method withColumnRenamed
+new_df = fire_df.withColumnRenamed('IncidentNumber','Incident')
+new_df.select('Incident').filter(col('City')=='Brisbane').show()
+
+#Changing the data types - string to to_timestamp
+change_df = new_df.withColumn('Incident_Date',col('Incident_Date').cast("timestamp"))
