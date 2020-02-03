@@ -1,0 +1,21 @@
+fire_schema = StructType([
+StructField('IncidentNumber',IntegerType(),True),
+StructField('Address',StringType(),True),
+StructField('Incident_Date',StringType(),True),
+StructField('CallNumber',IntegerType(),True),
+StructField('Alarm_DTTM',StringType(),True),
+StructField('Arrival_DTTM',StringType(),True),
+StructField('Close_DTTM',StringType(),True),
+StructField('City',StringType(),True),
+StructField('zipcode',IntegerType(),True),
+StructField('Battalion',StringType(),True),
+StructField('Station_Area',IntegerType(),True),
+StructField('Box',IntegerType(),True),
+StructField('Primary_Situation',StringType(),True),
+StructField('Mutual_Aid',StringType(),True),
+StructField('Action_taken_primary',StringType(),True),
+StructField('Property_Use',StringType(),True),
+StructField('neighborhood',StringType(),True)
+])
+
+
